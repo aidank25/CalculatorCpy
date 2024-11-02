@@ -2,6 +2,7 @@ from app.calculation import Addition, Subtraction, Multiplication, Division
 from app.calculator import Calculator
 from typing import Dict, Type
 from app.history_manager import HistoryManager
+from app.logger import setup_logger
 
 # Dictionary mapping operation strings to the corresponding calculation class.
 operations_map: Dict[str, Type] = {
@@ -102,6 +103,8 @@ Available commands:
         print("History cleared.")
 
 def main():
+    setup_logger()# enables logging with root logger
+
     processor = CommandProcessor()
     print("Welcome to the Calculator REPL. Type 'help' for instructions or 'exit' to quit.")
 
