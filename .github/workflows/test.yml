@@ -1,28 +1,29 @@
-name: Run Tests on Pull Request
+# run tests
+name: calculator with logging and env variables
 
 on:
+  push:
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main  # Change to your default branch if necessary
-
+    branches: [ "main" ]
+env:
+  TEST1: secret1
+  TEST2: secret2
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'  # Set your desired Python version
-
-      - name: Install dependencies from requirements.txt
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run tests with pytest
-        run: |
-          pytest
+    - uses: actions/checkout@v3
+    - name: set up python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: test with pytest
+      run: |
+        pytest

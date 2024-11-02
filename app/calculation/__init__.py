@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from app.operations import addition, subtraction, multiplication, division, Number
+import logging
 
 class Calculation(ABC):
     """
@@ -132,7 +133,9 @@ class Division(Calculation):
     
     def compute(self) -> Number:
         if self.b == 0:
+            logging.error("Attempted to divide by zero.")  # Log an error message.
             raise ZeroDivisionError("Division by zero is not allowed")
+
         return division(self.a, self.b)
 
     def __str__(self) -> str:
